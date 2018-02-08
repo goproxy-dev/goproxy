@@ -1,0 +1,44 @@
+[default]
+max_idle_conns = 100
+dial_timeout = 30
+dns_ttl = 1800
+prefer_ipv6 = false
+reject_intranet = false
+#graceful_timeout = 300
+#dns_server = "tls://9.9.9.9:853"
+#dns_map = {"example.org"=["127.0.0.1", "127.0.1.1"]}
+#dns_files = ["/etc/hosts", "hosts.txt"]
+
+[[http2]]
+listen = ":443"
+server_name = ["example.org"]
+keyfile = "example_org.pem"
+proxy_pass = "file:///var/www/html"
+
+[[http2]]
+listen = ":443"
+server_name = ["demo.example.org"]
+keyfile = "/root/.acme.sh/demo.example.org_ecc/demo.example.org.key"
+certfile = "/root/.acme.sh/demo.example.org_ecc/fullchain.cer"
+#outbound_ip = "45.89.11.190"
+proxy_pass = "http://127.0.0.1:80"
+enable_pprof = true
+enable_metrics = true
+auth_commands = ["htpasswd -vb htpasswd.txt {username} {password}"]
+
+[[tls]]
+server_name = ["demo.example.org"]
+backend = "127.0.0.1:8443"
+terminate = false
+#forward_to = "http2://demo.example.org"
+
+[[http]]
+listen = ":8080"
+server_name = ["localhost", "127.0.0.1"]
+enable_pac = true
+forward_to = "http2://demo.example.org"
+forward_bypass_regions = ["cn"]
+
+[[http]]
+listen = ":80"
+disable_forward = true
