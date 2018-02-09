@@ -10,5 +10,6 @@ listen = ":443"
 server_name = ["example.org"]
 keyfile = "example.org.key"
 certfile = "example.org.cer/fullchain.cer"
+proxy_pass = "file:///var/www/html"
 enable_pprof = true
 enable_metrics = true
