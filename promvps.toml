@@ -42,3 +42,4 @@ forward_bypass_regions = ["cn"]
 [[http]]
 listen = ":80"
 disable_forward = true
+proxy_pass = "file:///C:/Users/phuslu/Desktop"
