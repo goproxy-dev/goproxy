@@ -14,10 +14,10 @@ a full-featured https edge server
 * hosts file support
 * pluggable(shell style) auth
 * outbound ip address support
-* china whitelist pac script
+* whitelist PAC based on china_ip_list
 * country/region bypass rules
 * multi-dimensional traffic metrics
-* pprof handler
+* pprof/expvar debug handler
 * graceful reload
 
 ### Installation
