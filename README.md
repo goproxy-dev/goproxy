@@ -29,6 +29,9 @@ NOTE: If nginx/apache was alrady installed, change its listen port to 81 then re
 ### Configuraion
 see [promvps.toml](promvps.toml)
 
+### Tuning
+see [sysctl.conf](https://phuslu.github.io/sysctl.conf)
+
 ### Build
 ```
 # bootstrap go from https://github.com/phuslu/go
