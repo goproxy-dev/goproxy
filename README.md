@@ -24,7 +24,7 @@ a full-featured https edge server
 ```
 curl -L git.io/get-promvps | bash
 ```
-NOTE: If nginx/apache was alrady installed, change its listen port to 81 then restart it, promvps will proxy_pass to the 81 port
+NOTE: Please change webserver(nginx/apache) listen port to 127.0.0.1:81 if installed, promvps will proxy_pass to them.
 
 ### Configuraion
 see [promvps.toml](promvps.toml)

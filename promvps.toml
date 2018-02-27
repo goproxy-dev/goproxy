@@ -18,12 +18,16 @@ proxy_pass = "file:///var/www/html"
 [[http2]]
 listen = ":443"
 server_name = ["demo.example.org"]
-keyfile = "/root/.acme.sh/demo.example.org_ecc/demo.example.org.key"
-certfile = "/root/.acme.sh/demo.example.org_ecc/fullchain.cer"
+keyfile = "/path/to/demo.example.org.key"
+certfile = "/path/to/fullchain.cer"
 #outbound_ip = "45.89.11.190"
+#forward_speed_limit_for_guest = 102400
+#forward_speed_limit_for_user = 204800
+#forward_speed_limit_for_vip = 1024000
 proxy_pass = "http://127.0.0.1:80"
 enable_pprof = true
 enable_metrics = true
+enable_pac = true
 auth_commands = ["htpasswd -vb htpasswd.txt {username} {password}"]
 
 [[tls]]
@@ -36,6 +40,7 @@ terminate = false
 listen = ":8080"
 server_name = ["localhost", "127.0.0.1"]
 enable_pac = true
+enable_pac_banner = "mail to test@example.org for support"
 forward_to = "http2://demo.example.org"
 forward_bypass_regions = ["cn"]
 

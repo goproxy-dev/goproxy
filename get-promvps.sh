@@ -10,7 +10,7 @@ cd "$(dirname "$0")" && test -f "$linkpath" && cd "$(dirname "$linkpath")" || tr
 if ! pidof promvps >/dev/null; then
     if ss -v >/dev/null 2>&1; then
         if ss -anptl | grep -q ':443 '; then
-            echo -e "\e[1;31mtcp port 443 already used, quit.\e[0m"
+            echo -e "\e[1;31mtcp port 443 already used, please shutdown 443 port in webserver(nginx/apache) config.\e[0m"
             exit 1
         fi
         if ss -anptl | grep -q ':80 '; then
@@ -154,8 +154,6 @@ listen = ":443"
 server_name = ["${server_name}"]
 proxy_pass = "http://127.0.0.1:80"
 enable_pac = true
-#keyfile = "/root/.acme.sh/${server_name}_ecc/${server_name}.key"
-#certfile = "/root/.acme.sh/${server_name}_ecc/fullchain.cer"
 #auth_commands = ["htpasswd -vb htpasswd.txt {username} {password}"]
 EOF
 fi
