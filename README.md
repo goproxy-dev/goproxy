@@ -14,6 +14,7 @@ a full-featured https edge server
 * hosts file support
 * pluggable(shell style) auth
 * outbound ip address support
+* tls prober mitigation
 * whitelist PAC based on china_ip_list
 * country/region bypass rules
 * multi-dimensional traffic metrics

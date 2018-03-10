@@ -4,6 +4,7 @@ dial_timeout = 30
 dns_ttl = 1800
 prefer_ipv6 = false
 reject_intranet = false
+#allow_empty_sni = true
 #graceful_timeout = 300
 #dns_server = "tls://9.9.9.9:853"
 #dns_map = {"example.org"=["127.0.0.1", "127.0.1.1"]}
@@ -20,6 +21,7 @@ listen = ":443"
 server_name = ["demo.example.org"]
 keyfile = "/path/to/demo.example.org.key"
 certfile = "/path/to/fullchain.cer"
+#verify_client_cert = true
 #outbound_ip = "45.89.11.190"
 #forward_speed_limit_for_guest = 102400
 #forward_speed_limit_for_user = 204800
@@ -28,6 +30,7 @@ proxy_pass = "http://127.0.0.1:80"
 enable_pprof = true
 enable_metrics = true
 enable_pac = true
+enable_pac_path = "/proxy.pac"
 auth_commands = ["htpasswd -vb htpasswd.txt {username} {password}"]
 
 [[tls]]
