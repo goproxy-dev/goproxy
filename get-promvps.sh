@@ -143,6 +143,7 @@ if [ ! -f promvps.user.toml ]; then
 [default]
 dial_timeout = 30
 dns_ttl = 900
+allow_empty_sni = true
 
 [[http]]
 listen = ":80"
