@@ -82,6 +82,8 @@ case $(uname -s)/$(uname -m) in
         ;;
 esac
 
+trap 'rm -rf promci.txt *.tmp; exit' SIGINT SIGQUIT
+
 LOCALVERSION=$(./promvps -version 2>/dev/null || :)
 echo "0. Local Prom VPS version ${LOCALVERSION}"
 
