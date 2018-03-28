@@ -107,7 +107,7 @@ fi
 
 echo "2. Downloading ${FILENAME}"
 # curl -kL https://bitbucket.org/phuslu/promvps/downloads/${FILENAME} >${FILENAME}.tmp
-curl -kL https://github.com/phuslu/promvps/releases/download/${RELEASETAG}/${FILENAME} >${FILENAME}.tmp
+curl -kL -# https://github.com/phuslu/promvps/releases/download/${RELEASETAG}/${FILENAME} >${FILENAME}.tmp
 mv -f ${FILENAME}.tmp ${FILENAME}
 
 echo "3. Extracting ${FILENAME}"

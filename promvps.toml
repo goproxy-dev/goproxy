@@ -21,6 +21,7 @@ listen = ":443"
 server_name = ["demo.example.org"]
 keyfile = "/path/to/demo.example.org.key"
 certfile = "/path/to/fullchain.cer"
+forward_allow_legacy_https = false
 #verify_client_cert = true
 #outbound_ip = "45.89.11.190"
 #forward_speed_limit_for_guest = 102400
@@ -45,6 +46,7 @@ server_name = ["localhost", "127.0.0.1"]
 enable_pac = true
 enable_pac_banner = "mail to test@example.org for support"
 forward_to = "http2://demo.example.org"
+# forward_reject_regions = ["cn"]
 forward_bypass_regions = ["cn"]
 
 [[http]]
