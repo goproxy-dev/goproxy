@@ -12,6 +12,11 @@ reject_intranet = false
 
 [[http2]]
 listen = ":443"
+server_name = ["127.0.0.1"]
+proxy_pass = "file:///var/www/html"
+
+[[http2]]
+listen = ":443"
 server_name = ["example.org"]
 keyfile = "example_org.pem"
 proxy_pass = "file:///var/www/html"

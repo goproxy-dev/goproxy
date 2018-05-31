@@ -42,7 +42,7 @@ _start() {
         fi
     fi
     cd ${DIRECTORY}
-    nohup env watchdog=1 ${DIRECTORY}/promvps -log_dir . >/dev/null 2<&1 &
+    nohup env supervisor=1 ${DIRECTORY}/promvps -log_dir . >/dev/null 2<&1 &
     local pid=$!
     echo -n "Starting promvps(${pid}): "
     sleep 1

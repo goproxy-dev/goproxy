@@ -2,9 +2,9 @@
 max_idle_conns = 100
 dial_timeout = 30
 dns_ttl = 1800
-allow_empty_sni = true
 prefer_ipv6 = false
 reject_intranet = false
+allow_empty_sni = true
 
 [[http2]]
 listen = ":443"
