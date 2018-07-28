@@ -13,18 +13,9 @@ env:
 
 before_script:
   - export TZ=Asia/Shanghai
+  - git config user.name "Travis CI"
+  - git config user.email "travis.ci.build@gmail.com"
+  - git config log.date iso
 
 script:
   - bash release.sh
-
-deploy:
-  provider: pages
-  local-dir: .
-  target-branch: release
-  keep-history: true
-  skip-cleanup: true
-  github-token: ${GITHUB_TOKEN}
-  name: Travis CI
-  email: travis.ci.build@gmail.com
-  on:
-    branch: release
