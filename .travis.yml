@@ -1,0 +1,30 @@
+dist: trusty
+language: bash
+
+branches:
+  only: release
+
+notifications:
+  email: false
+
+env:
+  global:
+    - secure: "MgCfRRqjwCk3XxYx6F28YNWb14NaOOIjfqO4tjNLCWJhL8Neh1v7xiDYYa3F123foIX0bfBEnNPNUsadGwvjMhxCnXOobWAU5QLA4WF8Y8+BS0UDyciqkFQ34kkYZRd7eh7y2Th78mZ3s0QYF1KUFQmukM3FKDzyo3k3DuyS8211O+FC5RboCFqqJQ8dqpYz1FB8jvvYn4ZDCPCroneV7Aauykrg7GgkpKRjPCtPlX28QHE0kGAOnyj2g8CUXsATyTQiuCeanH82IsMsyJFjPQgbwu6y9MHFFedirVlLIq2j5SrYQMh7G/I81IU5Yg7wmscXn9o60mwDDuKav2rDFUoL0AS4BS0FCcWFP4jkBxEXYprVEubQR4p3A/crJJ+rCPEh4IZSf9UFl/v4MdQNT1Ud+M/UPk9dZoo62u4SCBVVhubdVGnfSNmUGbF1qQoRXh1lBNjxm/EIBu6rmL25MEfXEBqLLidj7dbyxhmlDJY0dWR2CsT5Xfih5RbvdqoxMX06LczLZ9R6/iBRht5b5owbZzihQ2a7rtCY6PWdYD3zaziWjPwsWDW/ngI1xKU/V/BppeoliRma4wVsFH6rhgQy1KqlMmyDIsjHZMvMJOSthIO77w56yUfq8j09MFuFWkxwDUBpmnxFKnlRPGhOKlfcpP21MYOVDLmhVBn77O0="
+
+before_script:
+  - export TZ=Asia/Shanghai
+
+script:
+  - bash release.sh
+
+deploy:
+  provider: pages
+  local-dir: .
+  target-branch: release
+  keep-history: true
+  skip-cleanup: true
+  github-token: ${GITHUB_TOKEN}
+  name: Travis CI
+  email: travis.ci.build@gmail.com
+  on:
+    branch: release
