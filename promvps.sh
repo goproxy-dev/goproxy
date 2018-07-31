@@ -35,14 +35,8 @@ fi
 
 _start() {
     _check_installed
-    test $(ulimit -n) -lt 65535 && ulimit -n 65535
-    if ! grep -q bbr /proc/sys/net/ipv4/tcp_congestion_control; then
-        if grep -q bbr /proc/sys/net/ipv4/tcp_available_congestion_control; then
-            echo bbr > /proc/sys/net/ipv4/tcp_congestion_control
-        fi
-    fi
     cd ${DIRECTORY}
-    nohup env supervisor=1 ${DIRECTORY}/promvps -log_dir . >/dev/null 2<&1 &
+    nohup env supervisor=1 ${DIRECTORY}/promvps 2>promvps.error.log &
     local pid=$!
     echo -n "Starting promvps(${pid}): "
     sleep 1
@@ -118,6 +112,14 @@ _check_installed() {
         if [ "$0" != "${rcscript}" ]; then
             echo "promvps already installed as a service, please use systemctl/service command"
             exit 1
+        fi
+    fi
+    if test $(ulimit -n) -lt 65535; then
+        ulimit -n 65535
+    fi
+    if ! grep -q bbr /proc/sys/net/ipv4/tcp_congestion_control; then
+        if grep -q bbr /proc/sys/net/ipv4/tcp_available_congestion_control; then
+            echo bbr > /proc/sys/net/ipv4/tcp_congestion_control
         fi
     fi
 }

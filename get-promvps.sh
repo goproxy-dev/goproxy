@@ -13,10 +13,6 @@ if ! pidof promvps >/dev/null; then
             echo -e "\e[1;31mtcp port 443 already used, please shutdown 443 port in webserver(nginx/apache) config.\e[0m"
             exit 1
         fi
-        if ss -anptl | grep -q ':80 '; then
-            echo -e "\e[1;31mtcp port 80 already used, please change webserver(nginx/apache) listen to port 81.\e[0m"
-            exit 1
-        fi
     fi
 fi
 
@@ -143,14 +139,12 @@ if [ ! -f promvps.user.toml ]; then
 
     cat <<EOF >promvps.user.toml
 [default]
+log_level = "info"
+log_to_stderr = false
+log_max_megabytes = 100
+log_backups = 2
 dial_timeout = 30
 dns_ttl = 900
-allow_empty_sni = true
-
-[[http]]
-listen = ":80"
-disable_forward = true
-proxy_pass = "http://127.0.0.1:81"
 
 [[http2]]
 listen = ":443"
