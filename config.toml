@@ -1,4 +1,8 @@
 [default]
+log_level = "info"
+log_to_stderr = true
+log_max_megabytes = 100
+log_backups = 2
 max_idle_conns = 100
 dial_timeout = 30
 dns_ttl = 1800
