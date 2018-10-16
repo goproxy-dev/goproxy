@@ -4,22 +4,22 @@ dial_timeout = 30
 dns_ttl = 1800
 prefer_ipv6 = false
 reject_intranet = false
-allow_empty_sni = true
+#allow_empty_sni = true
+#graceful_timeout = 300
 
 [log]
 level = 'info'
 stderr = false
 backups = 2
-maxsize = 1073741824
+maxsize = 10485760
 localtime = true
 rotate = 'daily'
 
 [[http2]]
-listen = ":443"
-server_name = ["example.org"]
-keyfile = "example.org.key"
-certfile = "example.org.cer/fullchain.cer"
-forward_allow_legacy_https = false
-proxy_pass = "file:///var/www/html"
-enable_pprof = true
-enable_metrics = true
+listen = ':443'
+server_name = ['example.org']
+keyfile = '/path/to/example.org.key'
+certfile = '/path/to/fullchain.cer or /path/to/example.org.cer'
+proxy_pass = 'file:///var/www/html'
+forward_tls13_only = true
+#verify_client_cert = true
