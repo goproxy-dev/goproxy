@@ -28,6 +28,9 @@ if [ ! -d "${DIRECTORY}" ]; then
         DIRECTORY="$(dirname "$(realpath "$0")")"
     fi
 fi
+if [ -f "${DIRECTORY}/.env" ]; then
+    . "${DIRECTORY}/.env"
+fi
 if [ -n "${SUDO}" ]; then
     echo "ERROR: Please run as root"
     exit 1
@@ -35,8 +38,9 @@ fi
 
 _start() {
     _check_installed
+    test $(ulimit -n) -lt 100000 && ulimit -n 100000
     cd ${DIRECTORY}
-    nohup env supervisor=1 ${DIRECTORY}/promvps 2>promvps.error.log &
+    nohup env ENV=${ENV:-devlopment} supervisor=1 ${DIRECTORY}/promvps >>promvps.error.log 2<&1 &
     local pid=$!
     echo -n "Starting promvps(${pid}): "
     sleep 1
@@ -59,7 +63,8 @@ _stop() {
 }
 
 _restart() {
-    if ! ${DIRECTORY}/promvps -validate >/dev/null 2>&1; then
+    cd ${DIRECTORY}
+    if ! ${DIRECTORY}/promvps -validate ${ENV:-devlopment}.toml >/dev/null 2>&1; then
         echo "Cannot restart promvps, please correct promvps toml file"
         echo "Run '${DIRECTORY}/promvps -validate' for details"
         exit 1
@@ -112,14 +117,6 @@ _check_installed() {
         if [ "$0" != "${rcscript}" ]; then
             echo "promvps already installed as a service, please use systemctl/service command"
             exit 1
-        fi
-    fi
-    if test $(ulimit -n) -lt 65535; then
-        ulimit -n 65535
-    fi
-    if ! grep -q bbr /proc/sys/net/ipv4/tcp_congestion_control; then
-        if grep -q bbr /proc/sys/net/ipv4/tcp_available_congestion_control; then
-            echo bbr > /proc/sys/net/ipv4/tcp_congestion_control
         fi
     fi
 }

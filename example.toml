@@ -1,0 +1,64 @@
+[default]
+max_idle_conns = 100
+dial_timeout = 30
+dns_ttl = 1800
+prefer_ipv6 = false
+reject_intranet = false
+#allow_empty_sni = true
+#graceful_timeout = 300
+#dns_server = 'tls://9.9.9.9:853'
+#dns_map = {'example.org'=['127.0.0.1', '127.0.1.1']}
+#dns_files = ['/etc/hosts', 'hosts.txt']
+
+[log]
+level = 'info'
+stderr = false
+backups = 2
+maxsize = 1073741824
+localtime = true
+rotate = 'daily'
+
+[[https]]
+listen = ':443'
+server_name = ['127.0.0.1']
+proxy_pass = 'file:///var/www/html'
+
+[[http2]]
+listen = ':443'
+server_name = ['example.org']
+keyfile = 'example_org.pem'
+proxy_pass = 'file:///var/www/html'
+
+[[http2]]
+listen = ':443'
+server_name = ['demo.example.org']
+keyfile = '/path/to/demo.example.org.key'
+certfile = '/path/to/fullchain.cer'
+proxy_pass = 'http://127.0.0.1:80'
+forward_tls13_only = true
+#verify_client_cert = true
+#outbound_ip = '45.89.11.190'
+pac_path = '/proxy.pac'
+auth_text = 'Proxy Authentication Required'
+auth_command = './auth --servername {servername} --username {username} --password {password} --remote {remote}'
+
+[[tls]]
+server_name = ['demo.example.org']
+backend = '127.0.0.1:8443'
+terminate = false
+#forward_to = {host='example.com', port='443'}
+
+[[http]]
+listen = ':8080'
+server_name = ['localhost', '127.0.0.1']
+pac_banner = 'mail to test@example.org for support'
+pac_direct_domains = ['qq.com', 'weibo.com']
+pac_proxy_domains = ['itunes.apple.com']
+forward_to = {host='demo.example.com', port='443'}
+# forward_reject_regions = ['cn']
+forward_bypass_regions = ['cn']
+
+[[http]]
+listen = ':80'
+disable_forward = true
+proxy_pass = 'file:///C:/Users/phuslu/Desktop'

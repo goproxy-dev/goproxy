@@ -1,34 +1,33 @@
 ## PromVPS
-a full-featured https edge server
+a full-featured https server
 
 ### Features
 * tls1.3 + http2 + quic
 * autocert(Let's Encrypt) support
 * plain http2 support
 * tls termination
-* sni reverse proxy
-* http/https/quic/socks forward chain
+* sni routing
+* forward chain
 * global dns cache
-* dns over tls support
 * custom dns server support
+* dns over tls support
 * hosts file support
-* pluggable(shell style) auth
+* flexible auth
 * outbound ip address support
 * tls prober mitigation
-* whitelist PAC based on china_ip_list
+* pac file with china_ip_list
 * country/region bypass rules
-* multi-dimensional traffic metrics
-* pprof/expvar debug handler
+* traffic metrics
+* pprof/expvar handler
 * graceful reload
 
 ### Installation
 ```
 curl -L git.io/get-promvps | bash
 ```
-NOTE: Please change webserver(nginx/apache) listen port to 127.0.0.1:81 if installed, promvps will proxy_pass to them.
 
 ### Configuraion
-see [promvps.toml](promvps.toml)
+see [example.toml](example.toml)
 
 ### Tuning
 see [sysctl.conf](https://phuslu.github.io/sysctl.conf)
@@ -36,6 +35,6 @@ see [sysctl.conf](https://phuslu.github.io/sysctl.conf)
 ### Build
 ```
 # bootstrap go from https://github.com/phuslu/go
-gawk 'match($1, /"((github\.com|golang\.org)\/.+)"/) {if (!seen[$1]++) {gsub("\"", "", $1); print $1}}' $(find . -name "*.go") | xargs -n1 -i go get -u -v {}
+go list -deps | egrep '^[^/]+\.[^/]+/' | xargs -n1 -i go get -u -v {}
 go build -v
 ```

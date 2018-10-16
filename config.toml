@@ -1,14 +1,18 @@
 [default]
-log_level = "info"
-log_to_stderr = true
-log_max_megabytes = 100
-log_backups = 2
 max_idle_conns = 100
 dial_timeout = 30
 dns_ttl = 1800
 prefer_ipv6 = false
 reject_intranet = false
 allow_empty_sni = true
+
+[log]
+level = 'info'
+stderr = false
+backups = 2
+maxsize = 1073741824
+localtime = true
+rotate = 'daily'
 
 [[http2]]
 listen = ":443"

@@ -132,27 +132,31 @@ fi
 
 sed -i -r "s#DIRECTORY=.+?#DIRECTORY=$(pwd)#" promvps.sh
 
-if [ ! -f promvps.user.toml ]; then
+if [ ! -f production.toml ]; then
     echo "4. Configure promvps"
 
     $read_p "Please input your domain: " server_name </dev/tty
 
-    cat <<EOF >promvps.user.toml
+    cat <<EOF >production.toml
 [default]
-log_level = "info"
-log_to_stderr = false
-log_max_megabytes = 100
-log_backups = 2
 dial_timeout = 30
 dns_ttl = 900
 
+[log]
+level = 'info'
+stderr = false
+backups = 2
+maxsize = 1073741824
+localtime = true
+rotate = 'daily'
+
 [[http2]]
-listen = ":443"
-server_name = ["${server_name}"]
-proxy_pass = "http://127.0.0.1:80"
-enable_pac = true
-#auth_commands = ["htpasswd -vb htpasswd.txt {username} {password}"]
+listen = ':443'
+server_name = ['${server_name}']
+proxy_pass = 'http://127.0.0.1:80'
+#auth_command = './auth --servername {servername} --username {username} --password {password} --remote {remote}'
 EOF
+    echo 'ENV=production' | tee .env
 fi
 
 echo

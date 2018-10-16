@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+# coding:utf-8
+
+"""
+这是一个用户认证插件，您创建包含如下文本 auth.txt 来管理用户
+
+username1:password1
+username2:password2
+
+也可以请进一步修改此脚本添加远程数据库认证，用户限速等功能。
+"""
+
+import sys
+import json
+
+
+def authorize(servername, username, password, remote):
+    """authorize function"""
+    response = {
+        'error': '',        # 出错信息，不为空表示认证失败。
+        'speedlimit': 0,    # 速率限制，单位为 bytes/s, 0 表示不作限制。
+        'ttl': 600,         # 认证缓存，认证结果在内存中缓存多久。
+    }
+    try:
+        filename = 'auth.txt'
+        # filename = 'auth.{}.txt'.format(servername)
+        info = {}
+        for line in open(filename):
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split(':', 1)
+            info[parts[0]] = parts[1]
+        if username not in info:
+            response['error'] = 'wrong username'
+        elif password != info[username]:
+            response['error'] = 'wrong password'
+    except Exception as e:
+        response['error'] = str(e)
+    return json.dumps(response)
+
+
+if __name__ == "__main__":
+    kwargs = dict((k.strip('-'), v) for k, v in zip(sys.argv[1::2], sys.argv[2::2]))
+    sys.stdout.write(authorize(**kwargs))
