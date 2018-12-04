@@ -16,5 +16,5 @@ curl -kLs https://github.com/phuslu/promvps/releases/download/$RELEASE_TAG/$RELE
 
 # push release
 git add --all
-git commit -m "[RELEASE] `date +'%Y-%m-%d %T'`" || echo "[SKIP] No changed."
+git commit -m "[RELEASE] `date +'%Y-%m-%d %T'`" -m "[ci skip]" || echo "[SKIP] No changed."
 git push --quiet "https://$GITHUB_TOKEN@github.com/pexcn/goproxy.git" HEAD:release
